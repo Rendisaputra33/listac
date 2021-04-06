@@ -77,6 +77,12 @@ class _StateAdd extends State<AddTaskScreen> {
     Navigator.pop(context);
   }
 
+  _deleted() {
+    DatabaseHelper.instance.deleteTask(widget.task.id);
+    widget.updateTaskList();
+    Navigator.pop(context);
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -98,7 +104,7 @@ class _StateAdd extends State<AddTaskScreen> {
               Padding(
                 padding: EdgeInsets.symmetric(horizontal: 15.0, vertical: 10.0),
                 child: Text(
-                  'Add Activity',
+                  widget.task == null ? 'Add Activity' : 'Update Activity',
                   style: TextStyle(
                       color: Colors.black,
                       fontSize: 40.0,
@@ -196,12 +202,27 @@ class _StateAdd extends State<AddTaskScreen> {
                           borderRadius: BorderRadius.circular(30.0)),
                       child: FlatButton(
                         child: Text(
-                          'Add',
+                          widget.task == null ? 'Add' : 'Update',
                           style: TextStyle(color: Colors.white, fontSize: 20.0),
                         ),
                         onPressed: _submit,
                       ),
                     ),
+                    widget.task != null ? Container(
+                      margin: EdgeInsets.symmetric(vertical: 20.0),
+                      height: 60.0,
+                      width: double.infinity,
+                      decoration: BoxDecoration(
+                          color: Theme.of(context).primaryColor,
+                          borderRadius: BorderRadius.circular(30.0)),
+                      child: FlatButton(
+                        child: Text(
+                          'Delete',
+                          style: TextStyle(color: Colors.white, fontSize: 20.0),
+                        ),
+                        onPressed: _deleted,
+                      ),
+                    ) : SizedBox(),
                   ],
                 ),
               ),

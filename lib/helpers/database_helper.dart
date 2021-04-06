@@ -49,7 +49,7 @@ class DatabaseHelper {
     taskMapList.forEach((taskMap) {
       taskList.add(Task.fromMap(taskMap));
     });
-
+    taskList.sort((taskA, taskB) => taskA.tgl.compareTo(taskB.tgl));
     return taskList;
   }
 
